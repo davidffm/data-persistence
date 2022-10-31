@@ -12,7 +12,7 @@ public class Mainmanager1 : MonoBehaviour
     public static Mainmanager1 Instance;
     public TextMeshProUGUI nametext;
     public TextMeshProUGUI nametext2;
-    string das;
+    
     private void Awake()
     {
         if (Instance != null)
@@ -25,25 +25,16 @@ public class Mainmanager1 : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    private void Start()
-    {
-       
-    }
-    private void Update()
-    {
-        
-    }
+  
     public void CenaPlay()
     {
         SceneManager.LoadScene(1);
+        
     }
 
     public void SaveName()
     {
-        //nametext2.text = nametext.text;
-        
-        
-       // PlayerPrefs.SetString("nome_jogador", nametext.text);
-       nametext2.text= PlayerPrefs.GetString("nome_jogador");
+        PlayerPrefs.SetString("nome_jogador", nametext.text);
+      
     }
 }

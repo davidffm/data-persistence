@@ -11,17 +11,25 @@ public class MainManager : MonoBehaviour
     public Rigidbody Ball;
 
     public Text ScoreText;
+    public Text ScoreText2;
     public GameObject GameOverText;
     
     private bool m_Started = false;
-    private int m_Points;
-    
+    private int m_PointAtual;
+    int m_pointFinal;
+    int m_PointSave;
+
+
     private bool m_GameOver = false;
 
-    
+    private void Awake()
+    {
+        
+    }
     // Start is called before the first frame update
     void Start()
     {
+        
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
         
@@ -36,6 +44,7 @@ public class MainManager : MonoBehaviour
                 brick.onDestroyed.AddListener(AddPoint);
             }
         }
+        Load();
     }
 
     private void Update()
@@ -44,6 +53,7 @@ public class MainManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                
                 m_Started = true;
                 float randomDirection = Random.Range(-1.0f, 1.0f);
                 Vector3 forceDir = new Vector3(randomDirection, 1, 0);
@@ -52,25 +62,56 @@ public class MainManager : MonoBehaviour
                 Ball.transform.SetParent(null);
                 Ball.AddForce(forceDir * 2.0f, ForceMode.VelocityChange);
             }
+            
         }
         else if (m_GameOver)
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                
             }
         }
     }
 
     void AddPoint(int point)
     {
-        m_Points += point;
-        ScoreText.text = $"Score : {m_Points}";
+        
+        m_PointAtual += point;
+        ScoreText.text = $"Score : {m_PointAtual}";
     }
 
     public void GameOver()
     {
+        SavePoints();
+        Load();
         m_GameOver = true;
         GameOverText.SetActive(true);
+    }
+
+   public  void Load()
+    {
+        m_pointFinal = PlayerPrefs.GetInt("pontos");
+        ScoreText2.text = $"Best Score: {PlayerPrefs.GetString("nome_jogador")} : {m_PointSave}";
+    }
+
+    void SavePoints()
+    {
+       
+
+        if (m_PointAtual > m_pointFinal)
+        {
+            
+            m_PointSave = m_PointAtual;
+
+            PlayerPrefs.SetInt("pontos",m_PointSave);
+        }
+        else
+        {
+            m_PointSave = m_pointFinal;
+
+            PlayerPrefs.SetInt("pontos", m_PointSave);
+        }
     }
 }
