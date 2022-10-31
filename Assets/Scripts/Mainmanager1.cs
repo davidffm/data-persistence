@@ -11,7 +11,9 @@ public class Mainmanager1 : MonoBehaviour
 
     public static Mainmanager1 Instance;
     public TextMeshProUGUI nametext;
-    public TextMeshProUGUI nametext2;
+   
+    public int valor;
+    public string lastNameSave; 
     
     private void Awake()
     {
@@ -34,7 +36,13 @@ public class Mainmanager1 : MonoBehaviour
 
     public void SaveName()
     {
+       
         PlayerPrefs.SetString("nome_jogador", nametext.text);
+        PlayerPrefs.SetString("ultimo_nome",lastNameSave);
       
+    }
+     public void CleanScore()
+    {
+        PlayerPrefs.DeleteAll();
     }
 }

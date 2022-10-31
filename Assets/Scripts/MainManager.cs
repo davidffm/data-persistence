@@ -93,7 +93,14 @@ public class MainManager : MonoBehaviour
    public  void Load()
     {
         m_pointFinal = PlayerPrefs.GetInt("pontos");
-        ScoreText2.text = $"Best Score: {PlayerPrefs.GetString("nome_jogador")} : {m_PointSave}";
+        Mainmanager1.Instance.valor = m_pointFinal;
+
+        if (Mainmanager1.Instance.nametext==null)
+        {
+            Mainmanager1.Instance.nametext.text = Mainmanager1.Instance.lastNameSave;
+        }
+        ScoreText2.text = $"Best Score: {PlayerPrefs.GetString("nome_jogador")} : {Mainmanager1.Instance.valor }";
+       
     }
 
     void SavePoints()
@@ -113,5 +120,6 @@ public class MainManager : MonoBehaviour
 
             PlayerPrefs.SetInt("pontos", m_PointSave);
         }
+        
     }
 }
